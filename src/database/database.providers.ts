@@ -12,7 +12,7 @@ export const databaseProviders = [
         password: `${process.env.TYPEORM_PASSWORD}`,
         database: `${process.env.TYPEORM_DATABASE}`,
         entities: [__dirname + `${process.env.TYPEORM_ENTITIES}`],
-        synchronize: true,
+        synchronize: false,
       }),
   },
 ];

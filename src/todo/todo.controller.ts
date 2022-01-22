@@ -34,27 +34,6 @@ export class TodoController {
       });
   }
 
-  // @UseGuards(JwtAuthGuard)
-  // @Post()
-  // create(
-  //   @Res() res: Response,
-  //   @Body() createTodoDto: CreateTodoDto,
-  // ): Promise<void | Response<Error, Record<string, Todo>>> {
-  //   return this.todoService
-  //     .create(createTodoDto)
-  //     .then((todo) => {
-  //       return res.status(HttpStatus.CREATED).send({
-  //         todo,
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       res.status(HttpStatus.BAD_REQUEST).send({
-  //         message: 'Error creating Todo',
-  //         error: err,
-  //       });
-  //     });
-  // }
-
   @UseGuards(JwtAuthGuard)
   @Get()
   async findAll(): Promise<Todo[]> {

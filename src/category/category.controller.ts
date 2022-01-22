@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { Category } from './entities/category.entity';
@@ -12,7 +20,18 @@ export class CategoryController {
   @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() CreateCategoryDto: CreateCategoryDto): Promise<Category> {
-    return this.categoryService.create(CreateCategoryDto);
+    return this.categoryService
+      .create(CreateCategoryDto)
+      .then((category) => category)
+      .catch((err) => {
+        throw new HttpException(
+          {
+            message: 'Error creating category',
+            error: err.message,
+          },
+          HttpStatus.BAD_REQUEST,
+        );
+      });
   }
 
   @UseGuards(JwtAuthGuard)
