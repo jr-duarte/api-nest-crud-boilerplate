@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { TodoModule } from './todo/todo.module';
-import { CategoryModule } from './category/category.module';
+import { TodoModule } from './modules/todo/todo.module';
+import { CategoryModule } from './modules/category/category.module';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
