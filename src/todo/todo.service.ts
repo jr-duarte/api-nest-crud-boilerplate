@@ -15,6 +15,6 @@ export class TodoService {
   }
 
   async findAll(): Promise<Todo[]> {
-    return this.todoRepository.find();
+    return this.todoRepository.find({ relations: ['category'] });
   }
 }

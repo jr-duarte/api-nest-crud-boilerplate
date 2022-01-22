@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Category } from 'src/category/entities/category.entity';
 
 @Entity()
 export class Todo {
@@ -10,4 +11,7 @@ export class Todo {
 
   @Column('text')
   description: string;
+
+  @ManyToOne(() => Category, (category) => category.todo)
+  category: Category;
 }
