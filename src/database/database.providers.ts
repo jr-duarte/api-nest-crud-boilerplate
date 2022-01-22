@@ -6,12 +6,12 @@ export const databaseProviders = [
     useFactory: async () =>
       await createConnection({
         type: 'mysql',
-        host: 'localhost',
+        host: `${process.env.TYPEORM_HOST}`,
         port: 3306,
-        username: 'root',
-        password: 'root',
-        database: 'api_nest',
-        entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+        username: `${process.env.TYPEORM_USERNAME}`,
+        password: `${process.env.TYPEORM_PASSWORD}`,
+        database: `${process.env.TYPEORM_DATABASE}`,
+        entities: [__dirname + `${process.env.TYPEORM_ENTITIES}`],
         synchronize: true,
       }),
   },
