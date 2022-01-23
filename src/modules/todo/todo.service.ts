@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 import { Todo } from './entities/todo.entity';
@@ -23,11 +23,12 @@ export class TodoService {
     return this.todoRepository.findOne(id, { relations: ['category'] });
   }
 
-  async update(id: number, updateTodoDto: UpdateTodoDto): Promise<Todo> {
-    return this.todoRepository.save({
-      id: id,
-      ...updateTodoDto,
-    });
+  async update(
+    _id: number,
+    updateTodoDto: UpdateTodoDto,
+  ): Promise<UpdateResult> {
+    const { id, ...data } = updateTodoDto;
+    return this.todoRepository.update(_id, data);
   }
 
   async delete(id: number): Promise<DeleteResult> {

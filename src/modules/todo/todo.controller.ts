@@ -15,7 +15,6 @@ import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 import { Todo } from './entities/todo.entity';
 import { TodoService } from './todo.service';
-// import { UpdateTodoDto } from './dto/update-todo.dto';
 
 @Controller('todo')
 export class TodoController {
@@ -44,27 +43,30 @@ export class TodoController {
     return this.todoService.findAll();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return this.todoService.findOne(+id);
   }
-
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateTodoDto: UpdateTodoDto) {
-    return this.todoService
-      .update(+id, updateTodoDto)
-      .then((todo) => todo)
-      .catch((err) => {
+    return this.todoService.update(+id, updateTodoDto).then((result) => {
+      if (result.affected === 0) {
         throw new HttpException(
           {
-            message: 'Error updating todo',
-            error: err.message,
+            message: `Todo ${id} not found`,
           },
-          HttpStatus.BAD_REQUEST,
+          HttpStatus.NOT_FOUND,
         );
-      });
+      }
+      return {
+        message: `Todo ${id} updated`,
+      };
+    });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string) {
     return this.todoService.delete(+id).then((result) => {
