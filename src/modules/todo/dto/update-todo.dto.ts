@@ -15,17 +15,17 @@ class IDCategory {
 export class UpdateTodoDto {
   id: number;
 
+  @IsNotEmpty({ message: 'O nome não pode ser vazio' })
   @IsString({ message: 'O nome é uma string' })
-  @IsNotEmpty({ message: 'O nome é obrigatório' })
   @IsOptional()
   name: string;
 
-  @IsNotEmpty({ message: 'A descrição é obrigatória' })
+  @IsNotEmpty({ message: 'A descrição não pode ser vazio' })
   @IsString({ message: 'A descrição é uma string' })
   @IsOptional()
   description: string;
 
-  @IsNotEmpty({ message: 'A categoria é obrigatória' })
+  @IsNotEmpty({ message: 'A categoria não pode ser vazio' })
   @IsOptional()
   @ValidateNested()
   @Type(() => IDCategory)
