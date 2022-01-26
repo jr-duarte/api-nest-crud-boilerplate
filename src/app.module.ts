@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthModule } from './auth/auth.module';
-import { TodoModule } from './modules/todo/todo.module';
-import { CategoryModule } from './modules/category/category.module';
+import { AuthModule } from '@shared/auth/auth.module';
+import { TodoModule } from '@domain/todo/todo.module';
+import { CategoryModule } from '@domain/category/category.module';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    CategoryModule,
     TodoModule,
+    CategoryModule,
     AuthModule,
     ConfigModule.forRoot({
       envFilePath: `./env/${process.env.NODE_ENV}.env`,

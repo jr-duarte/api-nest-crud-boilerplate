@@ -7,10 +7,10 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { CreateCategoryDto } from './dto/create-category.dto';
-import { Category } from './entities/category.entity';
-import { CategoryService } from './category.service';
+import { JwtAuthGuard } from '@shared/auth/jwt-auth.guard';
+import { CreateCategoryDto } from '@domain/category/dto/create-category.dto';
+import { Category } from '@domain/category/entities/category.entity';
+import { CategoryService } from '@domain/category/category.service';
 // import { UpdateCategoryDto } from './dto/update-todo.dto';
 
 @Controller('category')

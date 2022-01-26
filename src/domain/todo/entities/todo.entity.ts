@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { Category } from '../../category/entities/category.entity';
+import { Category } from '@domain/category/entities/category.entity';
 
-@Entity()
+@Entity('todo')
 export class Todo {
   @PrimaryGeneratedColumn()
   id: number;

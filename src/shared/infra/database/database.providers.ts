@@ -1,3 +1,4 @@
+import { join } from 'path';
 import { createConnection } from 'typeorm';
 
 export const databaseProviders = [
@@ -11,7 +12,7 @@ export const databaseProviders = [
         username: `${process.env.TYPEORM_USERNAME}`,
         password: `${process.env.TYPEORM_PASSWORD}`,
         database: `${process.env.TYPEORM_DATABASE}`,
-        entities: [__dirname + `${process.env.TYPEORM_ENTITIES}`],
+        entities: [`${process.env.TYPEORM_ENTITIES}`],
         synchronize: false,
       }),
   },

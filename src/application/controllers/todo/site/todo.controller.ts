@@ -10,21 +10,20 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { CreateTodoDto } from './dto/create-todo.dto';
-import { UpdateTodoDto } from './dto/update-todo.dto';
-import { Todo } from './entities/todo.entity';
-import { TodoService } from './todo.service';
+import { JwtAuthGuard } from '@shared/auth/jwt-auth.guard';
+import { CreateTodoDto } from '@domain/todo/dto/create-todo.dto';
+import { UpdateTodoDto } from '@domain/todo/dto/update-todo.dto';
+import { Todo } from '@domain/todo/entities/todo.entity';
+import { TodoService } from '@domain/todo/todo.service';
 
 @Controller('todo')
 export class TodoController {
-  constructor(private readonly todoService: TodoService) {}
+  constructor(private readonly TodoService: TodoService) {}
 
   @UseGuards(JwtAuthGuard)
   @Post()
   async create(@Body() createTodoDto: CreateTodoDto): Promise<Todo> {
-    return this.todoService
-      .create(createTodoDto)
+    return this.TodoService.create(createTodoDto)
       .then((todo) => todo)
       .catch((err) => {
         throw new HttpException(
@@ -40,18 +39,18 @@ export class TodoController {
   @UseGuards(JwtAuthGuard)
   @Get()
   async findAll(): Promise<Todo[]> {
-    return this.todoService.findAll();
+    return this.TodoService.findAll();
   }
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    return this.todoService.findOne(+id);
+    return this.TodoService.findOne(+id);
   }
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateTodoDto: UpdateTodoDto) {
-    return this.todoService.update(+id, updateTodoDto).then((result) => {
+    return this.TodoService.update(+id, updateTodoDto).then((result) => {
       if (result.affected === 0) {
         throw new HttpException(
           {
@@ -68,8 +67,8 @@ export class TodoController {
 
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  async remove(@Param('id') id: string) {
-    return this.todoService.delete(+id).then((result) => {
+  async delete(@Param('id') id: string) {
+    return this.TodoService.delete(+id).then((result) => {
       if (result.affected === 0) {
         throw new HttpException(
           {
