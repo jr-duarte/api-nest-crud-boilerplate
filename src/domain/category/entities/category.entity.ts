@@ -1,7 +1,7 @@
 import { Todo } from '@domain/todo/entities/todo.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
-@Entity()
+@Entity('category')
 export class Category {
   @PrimaryGeneratedColumn()
   id: number;
