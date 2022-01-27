@@ -18,12 +18,13 @@ import { TodoService } from '@domain/todo/todo.service';
 
 @Controller('todo')
 export class TodoController {
-  constructor(private readonly TodoService: TodoService) {}
+  constructor(private readonly todoService: TodoService) {}
 
   @UseGuards(JwtAuthGuard)
   @Post()
   async create(@Body() createTodoDto: CreateTodoDto): Promise<Todo> {
-    return this.TodoService.create(createTodoDto)
+    return this.todoService
+      .create(createTodoDto)
       .then((todo) => todo)
       .catch((err) => {
         throw new HttpException(
@@ -39,47 +40,67 @@ export class TodoController {
   @UseGuards(JwtAuthGuard)
   @Get()
   async findAll(): Promise<Todo[]> {
-    return this.TodoService.findAll();
+    return this.todoService.findAll();
   }
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    return this.TodoService.findOne(+id);
+    return this.todoService.findOne(+id);
   }
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateTodoDto: UpdateTodoDto) {
-    return this.TodoService.update(+id, updateTodoDto).then((result) => {
-      if (result.affected === 0) {
+    return this.todoService
+      .update(+id, updateTodoDto)
+      .then((result) => {
+        if (result.affected === 0) {
+          throw new HttpException(
+            {
+              message: `Todo ${id} not found`,
+            },
+            HttpStatus.NOT_FOUND,
+          );
+        }
+        return {
+          message: `Todo ${id} updated`,
+        };
+      })
+      .catch((err) => {
         throw new HttpException(
           {
-            message: `Todo ${id} not found`,
+            message: err.message,
           },
-          HttpStatus.NOT_FOUND,
+          HttpStatus.BAD_REQUEST,
         );
-      }
-      return {
-        message: `Todo ${id} updated`,
-      };
-    });
+      });
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async delete(@Param('id') id: string) {
-    return this.TodoService.delete(+id).then((result) => {
-      if (result.affected === 0) {
+    return this.todoService
+      .delete(+id)
+      .then((result) => {
+        if (result.affected === 0) {
+          throw new HttpException(
+            {
+              message: `Todo ${id} not found`,
+            },
+            HttpStatus.NOT_FOUND,
+          );
+        }
+        return {
+          message: `Todo ${id} deleted`,
+        };
+      })
+      .catch((err) => {
         throw new HttpException(
           {
-            message: `Todo ${id} not found`,
+            message: err.message,
           },
-          HttpStatus.NOT_FOUND,
+          HttpStatus.BAD_REQUEST,
         );
-      }
-      return {
-        message: `Todo ${id} deleted`,
-      };
-    });
+      });
   }
 }
