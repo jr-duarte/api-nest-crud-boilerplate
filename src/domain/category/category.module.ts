@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from '@shared/infra/database/database.module';
-import { CategoryController } from '@application/controllers/category/site/category.controller';
+import { CategoryController } from '@application/controllers/category/cms/category.controller';
 import { categoryProviders } from './category.providers';
 import { CategoryService } from './category.service';
 

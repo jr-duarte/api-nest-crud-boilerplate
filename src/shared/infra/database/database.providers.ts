@@ -1,4 +1,3 @@
-import { join } from 'path';
 import { createConnection } from 'typeorm';
 
 export const databaseProviders = [

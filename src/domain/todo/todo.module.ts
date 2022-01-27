@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from '@shared/infra/database/database.module';
-import { TodoController } from '@application/controllers/todo/site/todo.controller';
+import { TodoController } from '@application/controllers/todo/cms/todo.controller';
 import { todoProviders } from './todo.providers';
 import { TodoService } from './todo.service';
 
